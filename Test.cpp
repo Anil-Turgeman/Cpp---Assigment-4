@@ -100,11 +100,6 @@ int main() {
 	;
 
         testcase.setname("Play with smart guesser");
-		RandomChooser randy2;
-		SmartGuesser smarty2;
-		for (uint i=0; i<100; ++i) {
-			testcase.CHECK_EQUAL(ply(randy2, smarty2, 4, 100) >x100, false);  // smarty should always win in at most 10 turns!
-		}
 
 		RandomChooser randy2;
 		SmartGuesser smarty2;
