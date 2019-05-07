@@ -1,35 +1,23 @@
-#include "calculate.hpp"
 #include <string>
 #include "iostream"
-using namespace std;
-namespace bullpgia{
-    string calculateBullAndPgia(string choice, string guess){
-        int tempC[10] = {0}, tempG[10] = {0}, bull = 0, pgia = 0;
-
-        for (int i = 0; i < choice.length(); i++){
-            tempC[i] = choice[i];
-            tempG[i] = guess[i];
-        }
-        for (int i = 0; i < choice.length(); i++){
-            if (tempC[i] == tempG[i]){
-                bull++;
-                tempC[i] = tempG[i] = 0;
-            }
-        }
-        int c = 0;
-        while (c < choice.length()){
-            if (tempC[c] != 0){
-                for (int i = 0; i < guess.length(); i++){
-                    if(tempG[i]!=0)
-                        if(tempG[i]==tempC[c]){
-                            pgia++;
-                            tempC[c]=0;
-                            tempG[i]=0;
-                        }
+using namespace std ;
+namespace bullpgia {
+string calculateBullAndPgia(string the_choice,string the_guess){
+        int pgia_numbers = 0;
+        int bull_numbers = 0;
+        int num[10] = {0};
+        for(int i=0; i<the_choice.length(); i++){
+            if(the_guess[i]==the_choice[i]){
+                bull_numbers++;
+            }else{
+                if(num[the_guess[i] - '0']++ < 0) {
+                        pgia_numbers++;
+                    }
+                if(num[the_choice[i] - '0']-- > 0){
+                        pgia_numbers++;
+                    }
                 }
-            }
-            c++;
         }
-        return std::to_string(bull) + ", " + std::to_string(pgia);
+            return to_string(bull_numbers) + "," +to_string(pgia_numbers);
     }
 }
