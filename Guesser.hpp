@@ -1,14 +1,14 @@
 #pragma once
 #include <iostream>
-#include "calculate.hpp"
-
+#include "Guesser.hpp"
+using std::string;
 
 namespace bullpgia{
-    class Guesser {
+    class SmartGuesser: public bullpgia::Guesser {
         public:
             uint length = 0;
-            virtual string guess()=0;
-            virtual void startNewGame(uint length){}
-            virtual void learn(string reply){}
+            string guess() override;
+            void learn(string reply) override;
+            void startNewGame(uint length) override;
     };
 }
