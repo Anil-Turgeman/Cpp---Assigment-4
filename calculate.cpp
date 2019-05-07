@@ -1,31 +1,35 @@
-#include <iostream>
 #include "calculate.hpp"
-#include <vector>
+#include <string>
+#include "iostream"
 using namespace std;
+namespace bullpgia{
+    string calculateBullAndPgia(string choice, string guess){
+        int tempC[10] = {0}, tempG[10] = {0}, bull = 0, pgia = 0;
 
-string calculateBullAndPgia(string choice, string guess){
-	int bulls = 0;
-	int pgia = 0;
-	string newGuess = " ";
-	string newChoice = " ";
-
-	for (int i = 0 ; i < choice.length() ; i++){
-		if (guess[i] == choice[i]){
-			bulls++;
-		}else {
-			newGuess += guess[i];
-			newChoice += choice[i];
-		}
-	}
-
-	for (int i = 0 ; i < newGuess.length() ; i++){
-		for (int j = 0 ; j < newChoice.length() ; j++){
-			if (newGuess[i] == newChoice[j]){
-				pgia++;
-				newChoice.replace(j, 1, "A");
-			}
-		}
-	}
-
-	return to_string(bulls) + ", " + to_string(pgia);
+        for (int i = 0; i < choice.length(); i++){
+            tempC[i] = choice[i];
+            tempG[i] = guess[i];
+        }
+        for (int i = 0; i < choice.length(); i++){
+            if (tempC[i] == tempG[i]){
+                bull++;
+                tempC[i] = tempG[i] = 0;
+            }
+        }
+        int c = 0;
+        while (c < choice.length()){
+            if (tempC[c] != 0){
+                for (int i = 0; i < guess.length(); i++){
+                    if(tempG[i]!=0)
+                        if(tempG[i]==tempC[c]){
+                            pgia++;
+                            tempC[c]=0;
+                            tempG[i]=0;
+                        }
+                }
+            }
+            c++;
+        }
+        return std::to_string(bull) + ", " + std::to_string(pgia);
+    }
 }
