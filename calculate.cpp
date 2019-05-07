@@ -1,23 +1,23 @@
 #include <string>
 #include "iostream"
 using namespace std;
-namespace bullpgia {
-    string calculateBullAndPgia(string choice, string guess){
-            int pgia = 0;
-            int bull = 0;
+namespace bullpgia{
+    string calculateBullAndPgia(string the_choice,string the_guess){
+            int pgia_numbers = 0;
+            int bull_numbers = 0;
             int num[10] = {0};
-            for(int i=0; i<choice.length(); i++){
-                if(guess[i]==choice[i]){
-                        bull++;
+            for(int i=0; i<the_choice.length(); i++){
+                if(the_guess[i]==the_choice[i]){
+                        bull_numbers++;
                 }else{
-                    if(num[guess[i] - '0']++ < 0) {
-                        pgia++;
+                    if(num[the_guess[i] - '0']++ < 0) {
+                        pgia_numbers++;
                     }
-                    if(num[choice[i] - '0']-- > 0){
-                        pgia++;
+                    if(num[the_choice[i] - '0']-- > 0){
+                        pgia_numbers++;
                     }
                 }
             }
-        return to_string(bull) + ", " + to_string(pgia);
+        return to_string(bull_numbers) + "," +to_string(pgia_numbers);
     }
 }
