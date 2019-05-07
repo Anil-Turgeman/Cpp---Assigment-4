@@ -1,31 +1,59 @@
-#include <iostream>
-#include <string>
 #include "SmartGuesser.hpp"
+#include <iostream>
+#include <iomanip>
+#include <sstream>
+#include <math.h>
+#include <string>
+using std::string;
 using namespace std;
 using namespace bullpgia;
 
-    int flag = 0;
-    int candidate = 0;
-    string ans = "";
+string SmartGuesser::guess(){
+    std::list<std::string>::iterator it = combination.begin();
+    if (combination.size() == 0)
+        newList();
+    if (combination.size() > 1){
+        std::advance(it, rand()%(combination.size()-1));
+        this->temp = *it;
+    }else if (combination.size() == 1)
+        this->temp = *combination.begin();
 
-    void SmartGuesser::learn(string reply){
-        int bulls = (int)(reply[0]);
-        if (bulls - 48 == (flag+1)){
-            flag++;
-            candidate = 0;
+    return temp;
+}
+
+void SmartGuesser::startNewGame(uint length){
+    combination.clear();
+    this->length=length;
+    newList();
+}
+
+
+void SmartGuesser::newList(){
+    int size = pow(10, length);
+    for (size_t i = 0; i < size; i++){
+        stringstream in;
+        in << setw(length) << setfill('0') << i;
+        string str = in.str();
+        combination.push_front(str);
+    }
+}
+
+
+
+void SmartGuesser::removeComb(string result){
+    list<string>::iterator it2 ;
+    it2=combination.begin();
+    while (it2 != combination.end()){
+        string pre = calculateBullAndPgia(*it2, temp);
+        if (pre.compare(result) != 0) {
+            it2 = combination.erase(it2);
+        }else{
+            ++it2;
         }
-        ans.replace(flag, 1, to_string(candidate));
-        candidate++;
     }
+    this->combination.remove(temp);
+}
 
-    string SmartGuesser::guess() {
-        return ans;
-    }
 
-    void SmartGuesser::startNewGame(uint length){
-        this->length = length;
-        flag = 0;
-        candidate = 0;
-        ans = "wrong";
-        ans = ans.substr(0,length);
-    }
+
+void SmartGuesser::learn(string result){    removeComb(result); }
